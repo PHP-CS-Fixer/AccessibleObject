@@ -1,0 +1,36 @@
+{
+    "name": "php-cs-fixer/accessible-object",
+    "type": "application",
+    "description": "A library to reveal object internals.",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Fabien Potencier",
+            "email": "fabien@symfony.com"
+        },
+        {
+            "name": "Dariusz Rumiński",
+            "email": "dariusz.ruminski@gmail.com"
+        }
+    ],
+    "require": {
+        "php": "^5.3 || ^7.0"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^4.8.35 || ^5.4.3",
+        "symfony/phpunit-bridge": "^3.2.2"
+    },
+    "conflict": {
+        "hhvm": "*"
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": { "PhpCsFixer\\AccessibleObject\\": "src/" }
+    },
+    "autoload-dev": {
+        "psr-4": { "PhpCsFixer\\AccessibleObject\\Tests\\": "tests/" }
+    }
+}
