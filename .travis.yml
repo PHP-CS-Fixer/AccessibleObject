@@ -1,7 +1,5 @@
 language: php
 
-sudo: false
-
 git:
     depth: 1
 
@@ -18,14 +16,14 @@ before_install:
     # turn off XDebug
     - phpenv config-rm xdebug.ini || return 0
 
-    # Composer: boost installation
-    - composer global show -ND 2>&1 | grep "hirak/prestissimo" || travis_retry composer global require $DEFAULT_COMPOSER_FLAGS hirak/prestissimo
+    # Composer v2
+    - composer self-update --2
 
 jobs:
     include:
         -
             stage: Static Code Analysis
-            php: 7.1
+            php: 7.2
             env: COMPOSER_FLAGS="--no-dev --prefer-stable"
             install:
                 - travis_retry composer update -d dev-tools $DEFAULT_COMPOSER_FLAGS
@@ -41,26 +39,19 @@ jobs:
 
         - &STANDARD_TEST_JOB
             stage: Test
-            php: 5.4
+            php: 5.6
             install:
                 - travis_retry composer update $DEFAULT_COMPOSER_FLAGS $COMPOSER_FLAGS
                 - composer info -D | sort
             script:
-                - vendor/bin/phpunit --verbose
-
-        -
-            <<: *STANDARD_TEST_JOB
-            php: 5.3
-            env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest"
-            dist: precise
-
-        -
-            <<: *STANDARD_TEST_JOB
-            php: 5.5
+                - vendor/bin/simple-phpunit
+            dist: xenial
 
         -
             <<: *STANDARD_TEST_JOB
             php: 5.6
+            env: COMPOSER_FLAGS="--prefer-stable --prefer-lowest"
+            dist: xenial
 
         -
             <<: *STANDARD_TEST_JOB
@@ -69,8 +60,25 @@ jobs:
         -
             <<: *STANDARD_TEST_JOB
             php: 7.1
+            dist: bionic
+
+        -
+            <<: *STANDARD_TEST_JOB
+            php: 7.2
+            dist: bionic
+
+        -
+            <<: *STANDARD_TEST_JOB
+            php: 7.3
+            dist: bionic
+
+        -
+            <<: *STANDARD_TEST_JOB
+            php: 7.4
+            dist: bionic
 
         -
             <<: *STANDARD_TEST_JOB
             php: nightly
             env: SYMFONY_DEPRECATIONS_HELPER=weak
+            dist: bionic
