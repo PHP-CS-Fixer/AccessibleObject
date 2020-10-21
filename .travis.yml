@@ -23,7 +23,7 @@ jobs:
     include:
         -
             stage: Static Code Analysis
-            php: 7.2
+            php: 7.4
             env: COMPOSER_FLAGS="--no-dev --prefer-stable"
             install:
                 - travis_retry composer update -d dev-tools $DEFAULT_COMPOSER_FLAGS
@@ -36,6 +36,7 @@ jobs:
                 - ./dev-tools/vendor/bin/phpmd src,tests text phpmd.xml || travis_terminate 1
                 - ./dev-tools/vendor/bin/composer-require-checker check composer.json || travis_terminate 1
                 - ./dev-tools/vendor/bin/php-cs-fixer fix -v
+            dist: xenial
 
         - &STANDARD_TEST_JOB
             stage: Test
