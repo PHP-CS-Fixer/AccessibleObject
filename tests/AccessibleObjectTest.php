@@ -27,7 +27,10 @@ final class AccessibleObjectTest extends TestCase
 {
     protected $accessibleObject;
 
-    protected function setUp()
+    /**
+     * @before
+     */
+    public function setUpProperty()
     {
         $this->accessibleObject = new AccessibleObject(new DummyClass());
     }
