@@ -14,14 +14,10 @@
         }
     ],
     "require": {
-        "php": "^5.3 || ^7.0"
+        "php": "^5.6 || ^7.0 || ^8.0"
     },
     "require-dev": {
-        "phpunit/phpunit": "^4.8.35 || ^5.4.3",
-        "symfony/phpunit-bridge": "^3.2.2"
-    },
-    "conflict": {
-        "hhvm": "*"
+        "symfony/phpunit-bridge": "^5.1"
     },
     "config": {
         "optimize-autoloader": true,
