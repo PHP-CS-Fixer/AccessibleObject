@@ -36,7 +36,7 @@ final class AccessibleObject
         }
 
         $method = $this->reflection->getMethod($name);
-        $method->setAccessible(true);
+        PHP_VERSION_ID < 80100 && $method->setAccessible(true);
 
         return $method->invokeArgs($this->object, $arguments);
     }
@@ -59,7 +59,7 @@ final class AccessibleObject
         }
 
         $property = $this->reflection->getProperty($name);
-        $property->setAccessible(true);
+        PHP_VERSION_ID < 80100 && $property->setAccessible(true);
 
         return $property->getValue($this->object);
     }
@@ -71,7 +71,7 @@ final class AccessibleObject
         }
 
         $property = $this->reflection->getProperty($name);
-        $property->setAccessible(true);
+        PHP_VERSION_ID < 80100 && $property->setAccessible(true);
 
         $property->setValue($this->object, $value);
     }

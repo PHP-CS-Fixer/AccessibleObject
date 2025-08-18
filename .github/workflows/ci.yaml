@@ -10,6 +10,14 @@ jobs:
       matrix:
         include:
           - php-version: '7.4'
+          - php-version: '8.0'
+          - php-version: '8.1'
+          - php-version: '8.2'
+          - php-version: '8.3'
+          - php-version: '8.4'
+            phpunit-flags: --display-deprecations --fail-on-deprecation
+          - php-version: '8.5'
+            phpunit-flags: --display-deprecations --fail-on-deprecation
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -17,6 +25,12 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-          extensions: none
+          extensions: none, ctype, curl, dom, json, mbstring, tokenizer, xml, xmlwriter
+          ini-values: display_errors=On, display_startup_errors=On, error_reporting=-1, zend.assertions=1
 
-      - run: php --version
+      - run: composer update
+
+      - if: matrix.php-version != '7.4' && matrix.php-version != '8.0' # These run PHPUnit 9, which does not have the option
+        run: vendor/bin/phpunit --check-php-configuration
+
+      - run: vendor/bin/phpunit tests --no-configuration ${{ matrix.phpunit-flags }}
