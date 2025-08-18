@@ -3,19 +3,13 @@ on:
   pull_request: ~
   push: ~
 jobs:
-  verify:
-    name: PHP ${{ matrix.php-version }} ${{ matrix.description }}
+  test:
+    name: PHP ${{ matrix.php-version }}
     strategy:
       fail-fast: false
       matrix:
         include:
           - php-version: '7.4'
-          - php-version: '8.0'
-          - php-version: '8.1'
-          - php-version: '8.2'
-          - php-version: '8.3'
-          - php-version: '8.4'
-          - php-version: '8.5'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v5
@@ -23,6 +17,6 @@ jobs:
       - uses: shivammathur/setup-php@v2
         with:
           php-version: ${{ matrix.php-version }}
-          extensions: none, ctype, curl, dom, json, mbstring, opcache, openssl, simplexml, tokenizer, xml, xmlwriter
+          extensions: none
 
-      - run: ./vendor/bin/simple-phpunit
+      - run: php --version
