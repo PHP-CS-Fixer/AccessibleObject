@@ -1,0 +1,22 @@
+name: CI
+on:
+  pull_request: ~
+  push: ~
+jobs:
+  test:
+    name: PHP ${{ matrix.php-version }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - php-version: '7.4'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: shivammathur/setup-php@v2
+        with:
+          php-version: ${{ matrix.php-version }}
+          extensions: none
+
+      - run: php --version
