@@ -1,3 +1,11 @@
+# 💀 Deprecation notice
+
+Accessing internals using this package makes it difficult for your IDE/SCA tools to track types properly.
+If you need to access internals, consider the following alternative:
+```php
+$bar = \Closure::bind(static fn ($object): string => $object->bar, null, Foo::class)($object);
+```
+
 # AccessibleObject
 
 `AccessibleObject` is small class allowing you to easily access internals of any object.
@@ -10,12 +18,12 @@ While we strongly discourage you to using it, it may be helpful in debugging or 
 <?php
 class Foo
 {
-    private $bar = 'baz';
+    private string $bar = 'baz';
 }
 
 $object = new Foo();
-echo $object->bar; // PHP Fatal error:  Uncaught Error: Cannot access private property Foo::$bar
+$bar = $object->bar; // PHP Fatal error:  Uncaught Error: Cannot access private property Foo::$bar
 
 $accessibleObject = new AccessibleObject($object);
-echo $accessibleObject->bar; // 'baz'
+$bar = $accessibleObject->bar; // 'baz'
 ```
