@@ -3,7 +3,7 @@
 Accessing internals using this package makes it difficult for your IDE/SCA tools to track types properly.
 If you need to access internals, consider the following alternative:
 ```php
-$bar = \Closure::bind(static fn ($object): string => $object->bar, null, Foo::class)($object);
+$bar = \Closure::bind(static fn (Foo $object): string => $object->bar, null, Foo::class)($object);
 ```
 
 # AccessibleObject
